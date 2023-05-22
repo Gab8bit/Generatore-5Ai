@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Generatore di Nomi Casuali</title>
+  <style>
+    .container {
+      margin-top: 50px;
+      font-color: red;
+    }
+
+    #randomName {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .btn {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3 class="center-align">Generatore della Morte [4Ai]</h3>
+    <br><br>
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <div id="randomName" class="flow-text"></div>
+<br><br>
+        <div class="input-field">
+          <select id="nameSelect" multiple>
+            <option value="Lorenzo Conti">Lorenzo Conti</option>
+            <option value="Gabriele Nannini">Gabriele Nannini</option>
+            <option value="Valerio Reginelli">Valerio Reginelli</option>
+            <option value="Ivan Khan">Ivan Khan</option>
+            <option value="Valerio Picchi">Valerio Picchi</option>
+            <option value="Enzo Piscopo">Enzo Piscopo</option>
+            <option value="Leonardo Lanni">Leonardo Lanni</option>
+            <option value="Lorenzo Frascella">Lorenzo Frascella</option>
+            <option value="Sean Ingami">Sean Ingami</option>
+            <option value="Davide Aprea">Davide Aprea</option>
+            <option value="Francesco Di Biagio">Francesco Di Biagio</option>
+            <option value="Alessio Bianchini">Alessio Bianchini</option>
+          </select>
+          <label for="nameSelect">Seleziona i nomi da escludere</label>
+        </div>
+        <br><br>
+        <div class="center-align">
+          <a id="randomButton" class="waves-effect waves-light btn">Scegli chi verrà ucciso</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+
+      var names = Array.from(document.querySelectorAll('#nameSelect option')).map(function(option) {
+        return option.value;
+      });
+
+      var randomButton = document.querySelector('#randomButton');
+      var randomName = document.querySelector('#randomName');
+
+      randomButton.addEventListener('click', function() {
+        var filteredNames = names.filter(function(name) {
+          return !document.querySelector('#nameSelect option[value="' + name + '"]').selected;
+        });
+
+                if (filteredNames.length > 0) {
+          randomName.innerHTML = '';
+          randomButton.disabled = true;
+
+          var interval = setInterval(function() {
+            var randomIndex = Math.floor(Math.random() * filteredNames.length);
+            randomName.innerHTML = filteredNames[randomIndex];
+          }, 100);
+
+          setTimeout(function() {
+            clearInterval(interval);
+            randomButton.disabled = false;
+          }, 3000);
+        } else {
+          randomName.innerHTML = 'Seleziona almeno un nome da escludere';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
